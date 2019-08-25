@@ -1,0 +1,121 @@
+<mat-toolbar>
+  <span>{{formControls.id.value?"Modify Employee" : "New Employee"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabindex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input
+            matInput
+            id="fullName"
+            formControlName="fullName"
+            placeholder="Full Name*">
+          <mat-error *ngIf="!formControls.fullName.valid && formControls.fullName.errors.required">
+            Full name is required
+          </mat-error>
+          <mat-error *ngIf="!formControls.fullName.valid && formControls.fullName.errors.minlength">
+            Full name minimum should be length of 3
+          </mat-error>
+          <mat-error *ngIf="!formControls.fullName.valid && formControls.fullName.errors.maxlength">
+            Full name maximum should be length of 50
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="email"
+            formControlName="email"
+            placeholder="Email*">
+          <mat-error *ngIf="!formControls.email.valid && formControls.email.errors.required">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="!formControls.email.valid && formControls.email.errors.email">
+            Email is not in correct pattern
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="mobile"
+            formControlName="mobile"
+            placeholder="Mobile*">
+          <mat-error *ngIf="!formControls.mobile.valid && formControls.mobile.errors.required">
+            Mobile is required
+          </mat-error>
+          <mat-error *ngIf="!formControls.mobile.valid && formControls.mobile.errors.minlength">
+            Mobile minimum should be length of 9
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="city"
+            formControlName="city"
+            placeholder="City*">
+          <mat-error *ngIf="!formControls.city.valid && formControls.city.errors.required">
+            City is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <div class="add-bottom-padding">
+          <mat-radio-group formControlName="gender">
+            <mat-radio-button value="1" >Male</mat-radio-button>
+            <mat-radio-button value="2">Female</mat-radio-button>
+            <mat-radio-button value="3">Other</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-form-field>
+          <mat-select formControlName="department" placeholder="Department*">
+            <mat-option *ngFor="let department of departmentList" value="{{department.id}}">
+              {{department.name}} - {{department.code}}
+            </mat-option>
+            <!--<ng-container *ngFor="let department of departments">
+              <mat-option value="{{department.id}}">
+                {{department.value}}
+              </mat-option>
+            </ng-container>-->
+          </mat-select>
+          <mat-error *ngIf="!formControls.department.valid && formControls.department.errors.required">
+            Department is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            id="hireDate"
+            formControlName="hireDate"
+            placeholder="Hire Date*"
+            [matDatepicker]="picker">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="!formControls.hireDate.valid && formControls.hireDate.errors.required">
+            Hire Date is required
+          </mat-error>
+        </mat-form-field>
+        <div class="add-bottom-padding">
+          <mat-checkbox formControlName="isPermanent">Permanent Employee</mat-checkbox>
+        </div>
+        <div class="button-row">
+          <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="employeeForm.invalid">Submit</button>
+          <button mat-raised-button (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
