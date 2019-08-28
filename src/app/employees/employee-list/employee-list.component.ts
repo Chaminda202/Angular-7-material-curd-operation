@@ -4,6 +4,7 @@ import {Employee} from '../../model/employee';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, MatDialogConfig} from '@angular/material';
 import {EmployeeComponent} from '../employee/employee.component';
 import {NotificationService} from '../../shared/notification.service';
+import {DialogService} from '../../shared/dialog.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -21,7 +22,8 @@ export class EmployeeListComponent implements OnInit {
   searchKey: string;
 
   constructor(private employeeService: EmployeeService, private dialog: MatDialog,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -79,10 +81,19 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onDelete(element: Employee) {
-    if (confirm('Are you sure to delete?')) {
-      this.employeeService.delete(element);
-      this.notificationService.warnMessage('Deleted Successfully..!!');
-    }
+    /* if (confirm('Are you sure to delete?')) {
+       this.employeeService.delete(element);
+       this.notificationService.warnMessage('Deleted Successfully..!!');
+     }*/
+    // this.dialogService.openConfirmDialog('Are you sure to delete?');
+    this.dialogService.openConfirmDialog('Are you sure to delete?')
+      .afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.employeeService.delete(element);
+          this.notificationService.warnMessage('Deleted Successfully..!!');
+        }
+      });
   }
 
   loadList() {

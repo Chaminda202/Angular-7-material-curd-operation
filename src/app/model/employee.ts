@@ -6,6 +6,6 @@ export class Employee {
   city: string;
   gender: string;
   department: string;
-  hireDate: string;
+  hireDate: any;
   isPermanent: boolean;
 }

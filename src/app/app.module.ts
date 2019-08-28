@@ -16,13 +16,15 @@ import {EmployeeService} from './shared/employee.service';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {NotificationService} from './shared/notification.service';
 import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
+import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeesComponent,
     EmployeeComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    MatConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,6 @@ import { EmployeeListComponent } from './employees/employee-list/employee-list.c
   ],
   providers: [EmployeeService, AngularFirestore, NotificationService],
   bootstrap: [AppComponent],
-  entryComponents: [EmployeeComponent]
+  entryComponents: [EmployeeComponent, MatConfirmDialogComponent]
 })
 export class AppModule { }
